@@ -1,0 +1,3 @@
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pyecharts
+pip install jupyter
+pip3 install --upgrade numpy
