@@ -1,0 +1,356 @@
+%\documentclass[11pt, a4, twocolumn]{article}
+\documentclass[11pt, a4paper]{article}
+
+\usepackage{ctex} % 中文支持
+\usepackage[
+    left=2.3cm, right=2.3cm, top=1.54cm, bottom=1.5cm
+    %,includeheadfoot, headheight = 2.3cm, footskip = 2.9 cm
+    ]{geometry}  % 设置文档格式
+\usepackage{graphicx}   % 用于导入图片
+\usepackage{verbatim}   % 批量注释，使用\begin{comment}环境
+
+\usepackage{wrapfig}    % 可以被文字包围的图片
+\usepackage{lipsum}     % 生成随机话语，使用\lipsum[1-2]环境
+%\usepackage{cuted}     % 双栏跨行支持，使用\begin{strip}环境
+%%\stripsep -3pt plus 3pt minus 2pt
+%\usepackage{amsmath,esint} % 输出数学公式
+\usepackage{fancyhdr}
+\usepackage[dvipsnames]{xcolor}
+    \pagestyle{fancy}
+    \fancyhf{}
+    \rhead{\LaTeX{} 从入门到魔怔}
+    \lhead{张家铭}
+    \rfoot {\thepage}
+    \lfoot{2022}
+
+\usepackage{listings}   % 代码高亮和格式化展示
+    \usepackage{xcolor}
+    \definecolor{codegreen}{rgb}{0,0.6,0}
+    \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+    \definecolor{codepurple}{rgb}{0.58,0,0.82}
+    \definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+    \lstdefinestyle{mystyle}{
+        backgroundcolor=\color{backcolour},   
+        commentstyle=\color{codegreen},
+        keywordstyle=\color{magenta},
+        numberstyle=\tiny\color{codegray},
+        stringstyle=\color{codepurple},
+        basicstyle=\ttfamily\footnotesize,
+        breakatwhitespace=false,         
+        breaklines=true,                 
+        captionpos=b,                    
+        keepspaces=true,                 
+        numbers=left,                    
+        numbersep=7pt,                  
+        showspaces=false,                
+        showstringspaces=false,
+        showtabs=false,                  
+        tabsize=8,
+        frameround=fftt,
+        frame=tBLr,
+        emph={printf},emphstyle={\underbar}, % 强调printf，在它下面加下划线
+        aboveskip = 3pt, %与代码环境上一行的垂直间距为5pt
+        belowskip = 3pt %与代码环境下一行的垂直间距为4pt
+    }
+    \lstset{style=mystyle}
+
+\begin{comment}
+\fancyhead[C]{
+    \noindent
+    \fcolorbox{SpringGreen}{SpringGreen}{%
+        \begin{minipage}[c][2.3cm][c]{0.025\headwidth}
+            \mbox{}    
+        \end{minipage}
+        \begin{minipage}[c][2.3cm][c]{0.5\headwidth}
+            \LARGE{
+                \textcolor{darkgray}{This is the Title of a Very Important Report}}\\\large{\textcolor{gray}{Author}
+                }
+        \end{minipage}
+        \begin{minipage}[c][2.3cm][c]{0.45\headwidth}%
+            \hfill%
+            \includegraphics[height=0.9\headheight]{fig/head.jpeg}    
+        \end{minipage}
+        \begin{minipage}[c][2.3cm][c]{0.025\headwidth}
+             \mbox{}
+        \end{minipage}
+    }
+}
+\renewcommand{\headrulewidth}{2pt}
+\renewcommand{\footrulewidth}{1pt}
+\fancyhfoffset[L]{2.3cm}
+\fancyhfoffset[R]{2.3cm}
+\end{comment}
+
+\bibliographystyle{plain}
+    \nocite{*}
+
+\title{\LaTeX{} 从入门到魔怔}
+\begin{document}
+	% 在页面的顶部生成一个标题
+	\maketitle
+	\tableofcontents
+	\section{\LaTeX{} 简介}
+		\LaTeX{} 是一个使用高级标记语言的排版系统。\LaTeX{} 使用一组丰富的命令来指定文档的组成部分（标题、章节、粗体字、斜体字、图表等等），并让\LaTeX{} 来处理格式问题。当然，你还可以对文件进行个性化处理，进一步指定文件的格式和功能。
+		
+		一个\LaTeX{} 文档（*.tex文件）被分成两个主要部分：导言区（preamble）和文件的主体（main body）。导言区包含了所有的全局规格和格式设置，如纸张大小、字体大小、是什么类型的文件（文章、书籍、报告、信件\dots）。它也是我们包含 "包 "的地方，它允许访问宏库以增加\LaTeX{} 的功能。然后是文件的主体，通常被分为不同的部分、章节或小节。
+		
+		导言区从这个命令开始：
+		\begin{lstlisting}
+    \documentclass[ ]{ }\end{lstlisting}
+		大括号允许你指定文件类型（或 "类别"）--标准的类型是article、book、report和letter。写完了导言区，主文件的开头和结尾是：
+		\begin{lstlisting}
+    \begin{document} ... \end{document}\end{lstlisting}
+		在\textbackslash begin\{document\} 以前的命令，将被视为处于导言区中的命令。
+		
+		\subsection{文档类别}
+			\LaTeX{} 的标准分段命令是：\textbackslash part\{\}, \textbackslash section\{\}, \textbackslash subsection\{\}和\textbackslash paragraph\{\}。这些都是三个标准文档类别所共有的，而report和book还有一个更高的分段命令\textbackslash chapter\{\}，article还有一个更低的分段命令\textbackslash subsection\{\}。
+			
+			还有一些其他区别，诸如：
+			\begin{itemize}
+				\item[1] book和report中的每一章都有图表和其他图表以及方程式的编号，而文章中的编号则是全面的;
+				\item[2] 书籍和报告类的文件以标题页（如果指定的话）作为独立的一页开始，而文章则没有;
+				\item[3] \textbackslash abstract\{\}在book类中是不可用的
+			\end{itemize}
+			\textbackslash documentclass[ ]\{ \}中的方括号为可选参数，有如下几类：
+			\begin{enumerate}
+				\item[纸张尺寸] 标准选项包括：a4纸、a5纸、b5纸、letterpaper、executivepaper和legalpaper。默认的页面大小是US letter，类似于A4。
+				\item[字体大小] 如12pt。对于标准文档类别，可以接受10pt（默认）、11pt和12pt。进一步的字体大小规范可以在文档正文中实现;
+				\item[单面双面] 默认情况下，书籍是双面的，而文章和报告是单面的;
+				\item[草稿模式] 不编排图片，允许更快的编排速度。
+			\end{enumerate}
+			
+			这些只是设置了全局的格式，在文件的主体部分，你可以在需要时对某些选项进行局部修改。在指定了文档类别和所需的选项后，导言部分还允许我们调用“包”，这样我们就可以访问\LaTeX{} 中特定功能的宏。包含这些的命令是:
+			\begin{lstlisting}
+    \usepackage[]{}\end{lstlisting}
+			流行的软件包包括geometry、graphicx、amsmath、xcolor，以及其他许多软件包。包的资源库及其文档可以在www.ctan.org。表\ref{table:pack}给出了最流行的软件包和它们的用途的概述。
+			
+			\begin{table}[!h]
+			    \centering
+				\begin{tabular}{|l|l|}
+				\hline
+						包名称              & 作用\\ \hline
+						graphicx           & 在文档中包含图片的必要条件。提供includegraphics命令\\
+						babel              & 改变文件的默认语言（对正确的连字符和换行符有用）\\
+						amsmath, amssymb   & 提供了一套全面的命令来格式化数学语句以及符号\\
+						hyperref           & \LaTeX{} 中的超链接管理，允许链接到文本中的
+						                     图、表和其他项目。\\
+						geometry           & 允许根据需要定义页面设置，如控制边距和文本宽度等功能\\
+						microtype          & 控制字距和其他字体设置\\                                                                                       
+						booktabs, multicol,\\ tabularx, tabulary 
+						                   & 高级表格格式化\\
+                        tikz, pgfplots     & 绘图和制图软件包（第三章）\\
+						fancyhdr           & 构建页眉和其他高级页面格式化\\                                                                                       
+                        biblatex, natbib   & 参考文献管理（第二章）\\ \hline                                                                          
+				\end{tabular}
+				\caption{\LaTeX{} 中常用的包}
+				\label{table:pack}
+			\end{table}
+			
+			通常需要进行的第一项修改是调整页边距和行距。要做到这一点，可以使用geometry包。它不仅可以用各种单位来规定页边距，还可以规定许多其他参数。边距可以用:
+			\begin{lstlisting}
+    \usepackage[margin=1.5cm]{geometry}\end{lstlisting}
+			来设置，也可以单独指定每个边距，用
+			\begin{lstlisting}
+    \usepackage[left=2cm, right=2cm, top=1.54cm, bottom=1cm]{geometry}\end{lstlisting}
+			改变行距的一个简单方法是使用setspace包。通过在导言区中设置usepackage[...]{setspace}，我们可以设置[doublespacing]来获得一个双倍行距的文件，或使用：
+			\begin{lstlisting}
+    \usepackage[onehalfspacing]{setspace}\end{lstlisting}
+
+		\subsection{基础环境}
+			\subsubsection{图片}
+				在\LaTeX{} 中导入 graphicx 包，我们可以使用\textbackslash includegraphics[ ]\{\}命令引入一个图片，并且可以在方括号位置直接定义图片的尺寸，如：[scale=1.3]；同时也可以间接设置图片的大小：
+				\begin{lstlisting}
+    \includegraphics[width = 0.8 \textwidth]{figure.png}\end{lstlisting}
+				
+				上面的例子是将图片调整一个为：页宽80\%的图片并引入。如果想同时指定只需要设置为：[width = 2cm, height = 5 cm]，想要旋转一定角度也可以设置：[angle=90]。
+				
+				在大括号中，我们必须传递图片的名称（路径名）。文件扩展名可以省略。\LaTeX{} 搜索图片的默认位置可以在导言中设置为全局变量：
+				\begin{lstlisting}
+    \graphicspath{{./figures}{./additionalFigures}}\end{lstlisting}
+				通过将 \textbackslash includegraphics[ ]\{\}命令放在 \textbackslash begin\{figure\}...\textbackslash end\{figure\}环境中，我们可以指定其相对于页面的位置，并给该图一个标题和标签。我们可以通过使用 \textbackslash begin\{figure\}[h] 来告诉\LaTeX{} ，让它在文本中的位置与源代码中的位置大致相同。如果我们想把图表放在页面的顶部或底部，我们可以用 t 或 b 代替 h；使用 p 可以把它放在自己的页面上，而添加一个 ！可以覆盖\LaTeX{} 默认的定位参数。\LaTeX{} 中图表的默认对齐方式是在页面的左边。由于图像经常需要居中，在图的环境中放置命令\textbackslash centering可以实现这一目的。
+				
+				标题的位置是在图的上方还是下方，只取决于\textbackslash caption\{...\}命令是在 \textbackslash includegraphics[]\{\}命令的上方还是下方。标签很有用，因为我们可以用它们来指代文本中的一个图（或表格、方程式等），而\LaTeX{} 会自动用正确的序号来代替它。
+				\begin{figure}[h]
+				    \centering
+				    \includegraphics[width = 0.2\textwidth]{fig/head}
+				    \caption{我的微信头像}
+				    \label{fig:MyHead}
+				\end{figure}
+				有时候我们可能希望我们的文字包裹着图片，我们则需要引入 wrapfig 包。同时，我们通过使用\textbackslash begin\{wrapfigure\}\{alignment\}\{width\} ... \textbackslash end\{wrapfigure\} 环境。对于对齐方式，r 对应右对齐、l 对应左对齐，而对于宽度则和常规图形环境相同。实际的图形本身也像以前一样被插入。
+								
+%------------------------------------------------------------------------------------------
+%
+%------------------------------------------------------------------------------------------	
+				\lipsum[1]
+				\begin{wrapfigure}{r}{0.2\textwidth}
+				    \centering
+				    \includegraphics[width = 0.2\textwidth]{fig/head}
+				    \caption{右对齐}
+				    \label{fig:LeftHead}
+				\end{wrapfigure}
+				
+				（测试文字）\lipsum[1-3]
+				
+				\begin{wrapfigure}{l}{0.2\textwidth}
+				    \centering
+				    \includegraphics[width = 0.2\textwidth]{fig/head}
+				    \caption{左对齐}
+				    \label{fig:LeftHead}
+				\end{wrapfigure}
+				
+				请注意，图的宽度不是相对于图框而言的，而是相对于文本宽度而言的，因此我们将它们的宽度设置为相同，这样图就可以填满图框的空间。
+				
+				（测试文字）\lipsum[30]
+%------------------------------------------------------------------------------------------
+%
+%------------------------------------------------------------------------------------------
+
+			\subsubsection{表格}
+			     \LaTeX{} 提供了许多软件包和工具来生成表格。两个常用的环境即 table 和 tabular，前者提供了表格的定位、对齐、标签和标题，后者则是表格本身。需要注意的是，table 环境不是必需的，我们可以简单地用 \textbackslash begin\{tabular\} 和\textbackslash end\{tabular\} 插入一个表格，但是这将让我们能够调整的参数变少。
+			     
+			     \begin{table}[!h]
+			     \centering
+			         \begin{tabular}{ l l l }
+			             cell 11 & cell 12 & cell 13 \\
+			             cell 21 & cell 22 & cell 23 \\
+			         \end{tabular}
+			     \caption{Table caption}
+			     \label{tab:myspstable}
+			     \end{table}
+
+
+                如同在 Figure 环境中一样，方括号中的位置变量允许我们将表格放置在各种地方。\textbackslash centering 使得表格居中放置。在 Tabular 环境中，右侧的 \{\} 表示表格内部元素的对齐方式：
+                \begin{table}[!h]
+                \centering
+                    \begin{tabular}{|c|c|c| p{3cm} |c|}
+                    \hline
+                        l & r & c & p\{3 cm\} & |\\ \hline
+                        左对齐 & 右对齐 & 居中放置 & 列宽 3 cm & 边界\\ \hline    
+                    
+                    \end{tabular}
+                    \caption{tabular 命令的参数列表}
+                    \label{tab:myspstable2}
+                \end{table}
+
+			    在每一行下部画一个横线可以使用, \textbackslash hline 命令。
+	\section{进阶操作}
+	
+	本章涉及高级格式化选项，如参考文献管理、页面设置和字体管理。此外，还介绍了新命令的创建以及与其他格式和编程语言的整合。本章最后对交叉引用、超链接和其他工具进行了一些介绍。
+	
+	   \subsection{参考管理系统}
+	   
+	       对于任何需要大量参考文献的大型作品和文件来说，最好先生成一个包含所有参考文献的.bib文件。这个文件必须按照特定模式进行格式化，然后可以用来在\LaTeX{} 中引用。
+	       
+	       要生成这个.bib文件，有两种选择：
+	       \begin{itemize}
+	           \item 使用允许导出.bib文件的参考文献管理程序（由于\LaTeX{} 的广泛采用，流行的参考文献管理程序如Zotero、Mendeley或EndNote都有这种功能）；
+	           \item 也可以手动创建一个.bib文件，这只需要一个简单的文本文件，其中包含一个所需的.bib格式的参考文献列表。
+	       \end{itemize}
+	       
+	       在.bib文件中，类型用 @ 表示（例如：@book），然后在大括号内给出条目，字段之间用逗号分隔;
+	       
+	       \begin{itemize}
+	           \item 第一个字段是关键词（在引用时使用）;
+	           \item 作者姓名用 <姓，名> 来表示，并用 "and" 来分隔；
+	           \item 当作者字段中出现机构或组织时，最好用一组额外的大括号将其括起来，以避免自动缩短第一个 “名字”。
+	       \end{itemize}
+	       
+	       BIBTeX 用样式（style）来管理参考文献的写法。BIBTeX 提供了几个预定义的样式，如 plain, unsrt, alpha 等。如果使用期刊模板的话，可能会提供自用的样式。 样式文件以 .bst 为扩展名。使用样式文件的方法是在源代码内（一般在导言区）使用 \textbackslash bibliographystyle 命令：
+	       \begin{lstlisting}
+    \bibliographystyle{ < < bib-name > > }\end{lstlisting}
+
+	       这里 < bst-name > 为 .bst 样式文件的名称，不要带 .bst 扩展名。当准备好了 .bib 数据库并且设置好样式文件后，在正文中使用 \textbackslash cite 命令去引用一个参考文献\cite{benson2013cme}，若希望没在正文中被引用的文献也出现在结尾的列表中，请使用 \textbackslash nocite\{*\} 命令。最后，在需要列出参考文献的位置，使用 \textbackslash bibliography 命令:
+
+	       \begin{lstlisting}
+    \bibliography{ < bib-name > }\end{lstlisting}
+
+	   \subsection{页面设置}
+	       在\LaTeX{} 中，页面的大小是在一开始就用 \textbackslash documentclass 命令设置的（例如，用 \textbackslash documentclass[a4paper]\{article\}），而更精细的调整。有两个包在这方面特别有用，即 geometry 包和 fancyhdr 包。
+	       
+	       \begin{table}[h]
+	           \centering
+	           \begin{tabular}{|c|c|}
+	                   \hline
+	                   参数 & 作用\\
+	                   \textbackslash pageheight, \textbackslash pagewidth   
+	                                             & 文档页面高度、宽度 \\ \hline
+	                   \textbackslash textwidth, \textbackslash textheight   
+	                                             & 文本区域的宽度、高度\\ \hline
+	                   \textbackslash linewidth                & 某一行宽度\\ \hline
+	                   \textbackslash baselineskip             & 段内行间距 \\ \hline
+	                   \textbackslash parskip                  & 自然段间距\\ \hline
+	           \end{tabular}
+	           \caption{\LaTeX{} 可用空间参数}
+	       \end{table}
+	       
+	       有了这些参数作为参考系，我们可以很容易地定义一些对象的尺寸，比如我们之前做过的，我们可以使用 \textbackslash includegraphics[width=0.5\textbackslash linewidth]\{\} 来定义一个 50\% 行宽度的图片。另一方面，我们也可以使用确切的数值以及单位：cm, mm, pt, sp, in, a和 em/ex (分别代表 ‘M’ 和 ‘x’).
+	       
+	       \subsubsection{留边与页面尺寸}
+	       \subsubsection{颜色}
+	       \subsubsection{页眉和页脚}
+	           包 fancyhdr 可以帮助我们实现精美的页眉和页脚，它允许我们对页眉和页脚进行完全定制。页眉和页脚的具体参数要在导言区进行设置，最常见的是使用命令：
+	           \begin{table}[h]
+	               \centering
+	               \begin{tabular}{|c|c|}
+	                       参数 & 作用\\
+	                       \textbackslash rhead\{\} & 右上文字\\
+	                       \textbackslash lhead\{\} & 左上文字\\
+	                       \textbackslash chead\{\} & 中上文字\\
+	                       \textbackslash rfoot\{\} & 右下角\\
+	                       \textbackslash lfoot\{\} & 左下角\\
+	                       \textbackslash cfoot\{\} & 中下部\\
+	               \end{tabular}
+	               \caption{fancyhdr 常用字段}
+	               \label{table:fancy}
+	           \end{table}
+	           一些特殊的字段，例如，\textbackslash thepage将生成页码，类似的还有\textbackslash thechapter和\textbackslash thesection，而\textbackslash leftmark和\textbackslash rightmark则分别生成当前章节的名称和编号（报告或书籍/文章），以及章节/分节（报告或书籍/文章）。
+	           \begin{lstlisting}
+    \renewcommand{\headrulewidth}{... pt}\end{lstlisting}
+	           可以用上述的命令来规定页眉(foot, 页脚)与正文之间的分隔线的粗细。为任何一行设置 0pt，就可以删除该行。
+	           
+	           在下面的例子中，我们将尝试为我们页面的顶部和底部生成一个横幅，以帮助示范其中的一些命令。因此，在序言中，我们将首先消除页眉、页脚和文本之间的线条，并使页眉也覆盖我们的左右页边距。要做到这一点，我们使用命令\textbackslash fancyhfoffset[]\{\}，并将其设置为等于我们的左右页边距，在本例中为 2.3 厘米，从而将页眉和页脚延伸到文档的边缘这里，还调用了软件包xcolor和graphicx，以便进行颜色选择和图表支持。
+	           
+	           要想在页面顶部加入一个全彩的矩形横幅，我们可以使用 \textbackslash fancyhead\{\}命令，并在其中心设置一个方框。要获得\LaTeX{} 的方框，可以使用命令\textbackslash fbox\{\}，但如果我们想要一个彩色的方框，我们可以使用 \textbackslash fcolorbox\{frame color\}\{box background color\}\{...\}。
+	                   
+	       \subsubsection{使用 listings 进行高亮代码}
+	           \begin{verbatim}
+	               #include<stdio.h>
+	               int main(){
+	                   hello, world!;
+	               }
+	               return 0;
+	               /* \begin{verbatim} ... */
+	           \end{verbatim}
+	           %[firstline=2, lastline =5] 只排版2-5行的代码
+	           \begin{lstlisting}[
+	               language=Python,
+	               caption = 这是python代码,
+	               ]
+                    import numpy as np
+    
+                    def incmatrix(genl1,genl2):
+                        m = len(genl1)
+                        n = len(genl2)
+                        M = None #to become the incidence matrix
+                        VT = np.zeros((n*m,1), int)  #dummy variable
+                        return M
+                \end{lstlisting}
+                \begin{lstlisting}[language=C, caption=C]
+                    #include<stdio.h>
+	               int main(){
+	                   printf("hello, world!");//测试一下中文注释
+	                   printf("hello, world!");//测试一下中文注释
+	               }
+	               return 0; 
+                \end{lstlisting}
+
+	       \subsubsection{画图}
+	           Tikzit是一个简单的GUI工具，它允许绘制基本的图形和图表。它生成的Tikz/PGF输出代码可以直接嵌入在\LaTeX 代码中，可以在https://tikzit.github.io/下载。
+	           
+	           对于特别是数学绘图、草图、几何图形和其他图表，https://www.mathcha.io/ 提供了一个易于使用的图形环境，可以很容易地导出到\LaTeX 代码。
+	           
+	           为了绘制更复杂的图形，Inkscape是一个开放源码的矢量图形编辑器，它允许导出到PDF，可以让ﬁgures中的任何文本与主文件共享相同的字体。它可以在https://inkscape.org/下载。
+	\section{浮动对象}
+	
+	\bibliography{refer}
+\end{document}
