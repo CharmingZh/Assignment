@@ -1,0 +1,15 @@
+This is foo and this is to test whether local wrapping works or not when we use the option "setlocal = wrap" vs "setlocal = nowrap"
+This is foo
+This is foo
+
+This is foo
+This i
+This is foo
+This is foo
+This is foo
+This is foo
+This is foo
+This is foo
+This is foo
+This is foo
+This is foo

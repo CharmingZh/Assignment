@@ -1,0 +1,9 @@
+This is foo and this is to test whether local wrapping works or not when we use the option "setlocal = wrap" vs "setlocal = nowrap"
+his is bar
+This is bar
+This is bar
+This is bar
+This is bar
+This is bar
+This is bar
+This is bar

@@ -1,0 +1,5 @@
+" string functions
+
+:let str = "Hello, world!"
+:echo printf("Length of %s = %d\n", g:str, strlen(g:str))
+:echo "Length of str is (again) " len(g:str)

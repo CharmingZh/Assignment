@@ -1,0 +1,15 @@
+return person.get_pets(type = "cat", fluffy_only = true)
+
+def count(i):
+  i += 1
+  print i
+
+  return foo
+
+print foo(bar) and what have we here?
+
+int main() {
+  print("bar");
+} asasas 
+
+add 1 2;

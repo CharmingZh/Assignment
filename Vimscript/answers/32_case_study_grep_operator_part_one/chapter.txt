@@ -1,0 +1,4 @@
+Hello world. How do you do?
+foo;ls
+foo:so-bar
+That's good to know.
