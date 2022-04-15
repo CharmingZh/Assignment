@@ -1,2 +1,3 @@
-[https://learnvimscriptthehardway.stevelosh.com](https://learnvimscriptthehardway.stevelosh.com/)
-https://www.w3cschool.cn/vim/
+[英文原版](https://learnvimscriptthehardway.stevelosh.com/)
+
+[中文参考](https://www.w3cschool.cn/vim/)
